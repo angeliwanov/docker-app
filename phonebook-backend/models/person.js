@@ -1,19 +1,18 @@
 const mongoose = require('mongoose');
 
-const url =
-  process.env.MONGODB_URI ||
-  'mongodb://the_username:the_password@localhost:3456/the_database';
+const url = process.env.MONGO_URL || undefined;
 
 mongoose.set('strictQuery', false);
 
-mongoose
-  .connect(url)
-  .then(() => {
-    console.log('connected to MongoDB');
-  })
-  .catch((error) => {
-    console.log('error connecting to MongoDB', error.mongoose);
-  });
+if (url && !mongoose.connection.readyState)
+  mongoose
+    .connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+      console.log('connected to MongoDB');
+    })
+    .catch((error) => {
+      console.log('error connecting to MongoDB', error.mongoose);
+    });
 
 const personSchema = new mongoose.Schema({
   name: {

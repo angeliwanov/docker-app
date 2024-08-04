@@ -19,7 +19,7 @@ services:
       - ./phonebook-backend/:/usr/src/app
     environment:
       - MONGO_URL=mongodb://the_username:the_password@mongo:27017/the_database
-    container_name: phonebook-backfend-dev
+    container_name: phonebook-backend-dev
     depends_on:
       - mongo
 
@@ -41,7 +41,7 @@ services:
       - ./nginx.dev.conf:/etc/nginx/nginx.conf:ro
     ports:
       - 8080:80
-    container_name: reverse-proxy-dev
+    container_name: reverse-proxy-phonebook-dev
     depends_on:
       - app
       - server
